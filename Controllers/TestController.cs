@@ -31,7 +31,7 @@ namespace my_budget.Controllers
 
         public string HelloResponse()
         {
-            return "Hello";
+            return "Hello world";
         }
     }
 }
