@@ -30,7 +30,7 @@ namespace my_budget
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "my_budget", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My Budget", Version = "v1" });
             });
         }
 
@@ -47,7 +47,7 @@ namespace my_budget
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "my_budget v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "My Budget v1"));
             }
 
             app.UseHttpsRedirection();
