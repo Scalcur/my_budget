@@ -29,6 +29,7 @@ namespace my_budget.Controllers
             }
         }
 
+        [NonAction]
         public string HelloResponse()
         {
             return "Hello world";
