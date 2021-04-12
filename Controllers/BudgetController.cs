@@ -7,9 +7,9 @@ namespace my_budget.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class TestController : BaseController<TestController>
+    public class BudgetController : BaseController<BudgetController>
     {
-        public TestController(ILogger<TestController> logger) : base(logger)
+        public BudgetController(ILogger<BudgetController> logger) : base(logger)
         {
 
         }
