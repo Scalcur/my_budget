@@ -9,8 +9,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using my_budget.Models;
+using my_budget.Interfaces;
+using my_budget.Manager;
 
 namespace my_budget
 {
@@ -26,6 +30,16 @@ namespace my_budget
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.Configure<ClientsDBSettings>(
+            Configuration.GetSection(nameof(ClientsDBSettings)));
+
+            services.AddSingleton<IClientSettings>(sp =>
+            sp.GetRequiredService<IOptions<IClientSettings>>().Value);
+
+            //services.AddSingleton<ClientManager>();
+
+            services.AddSingleton<IClientManager, ClientManager>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
