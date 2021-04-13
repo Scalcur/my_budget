@@ -18,6 +18,21 @@ namespace my_budget.Controllers
         {
             _clientManager = clientManager;
         }
+        
+        [HttpPost("create")] 
+        public async Task Create() 
+        {
+            try
+            {
+                var response = _clientManager.GetAll();
+                await SuccessResult(response);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                await ErrorResult(ex.Message);
+            }
+        }
 
         [HttpGet] 
         public async Task GetAll() 

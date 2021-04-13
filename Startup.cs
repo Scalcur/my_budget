@@ -26,19 +26,10 @@ namespace my_budget
         }
 
         public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
+        
         public void ConfigureServices(IServiceCollection services)
         {
-
-            services.Configure<ClientsDBSettings>(
-            Configuration.GetSection(nameof(ClientsDBSettings)));
-
-            services.AddSingleton<IClientSettings>(sp =>
-            sp.GetRequiredService<IOptions<IClientSettings>>().Value);
-
-            //services.AddSingleton<ClientManager>();
-
+            services.AddSingleton<IAppOption, AppOption>();
             services.AddSingleton<IClientManager, ClientManager>();
 
             services.AddControllers();
@@ -48,7 +39,6 @@ namespace my_budget
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseCors(builder =>

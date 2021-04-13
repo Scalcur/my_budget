@@ -11,12 +11,15 @@ namespace my_budget.Manager
     {
         private readonly IMongoCollection<ClientModel> _clients;
 
-        public ClientManager(IClientSettings settings)
+        public ClientManager(IAppOption settings)
         {
-            var client = new MongoClient(settings.ConnectionString);
-            var database = client.GetDatabase(settings.DatabaseName);
+            //var connectionToCluster = new MongoUrlBuilder(settings.ClientSettings.ConnectionString);
+            var client = new MongoClient(settings.ClientSettings.ConnectionString);
+            
+            var database = client.GetDatabase(settings.ClientSettings.DatabaseName);
 
-            _clients = database.GetCollection<ClientModel>(settings.Clients);
+            _clients = database.GetCollection<ClientModel>(settings.ClientSettings.Clients);
+            var d = 1;
         }
 
         public async Task<List<ClientModel>> GetAll()
@@ -26,7 +29,7 @@ namespace my_budget.Manager
             return getList;
         }
 
-        public ClientModel GetOne(int id) =>
+        public ClientModel GetOne(string id) =>
             _clients.Find<ClientModel>(client => client.Id == id).FirstOrDefault();
 
         public ClientModel Create(ClientModel client)
@@ -35,13 +38,13 @@ namespace my_budget.Manager
             return client;
         }
 
-        public void Update(int id, ClientModel clientIn) =>
+        public void Update(string id, ClientModel clientIn) =>
             _clients.ReplaceOne(client => client.Id == id, clientIn);
 
         public void Remove(ClientModel clientIn) =>
             _clients.DeleteOne(client => client.Id == clientIn.Id);
 
-        public void Remove(int id) => 
+        public void Remove(string id) => 
             _clients.DeleteOne(client => client.Id == id);
     }
 }

@@ -6,17 +6,19 @@ namespace my_budget.Models
 {
     public class ClientModel
     {
-        [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public int Id { get; set; }
+        public string  Id { get; set; }
 
-        [BsonElement("ClientName")]
+        [BsonElement("clientName")]
         public string ClientName { get; set; }
 
+        [BsonElement("budgetUpdate")]
         public decimal BudgetUpdate { get; set; }
 
+        [BsonElement("date")]
         public string Date { get; set; }
 
+        [BsonElement("time")]
         public string Time { get; set; }
     }
 }
