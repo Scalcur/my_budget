@@ -9,6 +9,9 @@ namespace my_budget.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public string  Id { get; set; }
 
+        [BsonElement("fromUserId")]
+        public string FromUserId { get; set; }
+
         [BsonElement("clientName")]
         public string ClientName { get; set; }
 

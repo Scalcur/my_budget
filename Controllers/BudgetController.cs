@@ -19,12 +19,27 @@ namespace my_budget.Controllers
             _clientManager = clientManager;
         }
         
-        [HttpPost("create")] 
-        public async Task Create() 
+        [HttpGet] 
+        public async Task GetAll() 
         {
             try
             {
-                var response = _clientManager.GetAll();
+                var response = _clientManager.GetAll().Result;
+                await SuccessResult(response);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                await ErrorResult(ex.Message);
+            }
+        }
+        
+        [HttpPost("create")] 
+        public async Task Create(ClientModel client) 
+        {
+            try
+            {
+                var response = _clientManager.Create(client).Result;
                 await SuccessResult(response);
             }
             catch(Exception ex)
@@ -34,12 +49,12 @@ namespace my_budget.Controllers
             }
         }
 
-        [HttpGet] 
-        public async Task GetAll() 
+        [HttpDelete("delete/{id:length(24)}")] 
+        public async Task Delete(string id) 
         {
             try
             {
-                var response = _clientManager.GetAll();
+                var response = _clientManager.Remove(id).Result;
                 await SuccessResult(response);
             }
             catch(Exception ex)
@@ -48,5 +63,7 @@ namespace my_budget.Controllers
                 await ErrorResult(ex.Message);
             }
         }
+
+        
     }
 }
