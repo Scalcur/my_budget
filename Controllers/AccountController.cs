@@ -28,7 +28,6 @@ namespace my_budget.Controllers
             _users = database.GetCollection<ClientModel>(settings.ClientSettings.Clients);
         }
 
-        [Authorize]
         public IActionResult Index()
         {
             if(User.Identity.IsAuthenticated)
@@ -38,7 +37,7 @@ namespace my_budget.Controllers
             return Content("не аутентифицирован");
         }
 
-        [HttpGet]
+        [HttpGet("login")]
         public IActionResult Login()
         {
             return View();
@@ -60,7 +59,7 @@ namespace my_budget.Controllers
             }
             return View(model);
         }
-        [HttpGet]
+        [HttpGet("register")]
         public IActionResult Register()
         {
             return View();
@@ -74,7 +73,7 @@ namespace my_budget.Controllers
                 ClientModel user = _users.Find<ClientModel>(u => u.Email == model.Email).FirstOrDefault();
                 if (user == null)
                 {
-                    
+
                     _users.InsertOne(new ClientModel {ClientName=model.UserName, Email = model.Email, Password = model.Password});
  
                     await Authenticate(model.Email);
@@ -100,6 +99,7 @@ namespace my_budget.Controllers
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
         }
  
+        [NonAction]
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

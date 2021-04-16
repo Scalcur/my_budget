@@ -30,6 +30,8 @@ namespace my_budget
         
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc();
+            
             services.AddSingleton<IAppOption, AppOption>();
             services.AddSingleton<IClientManager, ClientManager>();
             services.AddSingleton<IBudgetManager, BudgetManager>();
