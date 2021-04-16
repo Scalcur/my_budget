@@ -35,7 +35,7 @@ namespace my_budget.Manager
         public async Task<string> Create(ClientModel client)
         {
             _clients.InsertOne(client);
-            return "Note has been added";
+            return "Client has been added";
         }
 
         public async Task<string> Update(string id, ClientModel clientIn)
@@ -57,11 +57,11 @@ namespace my_budget.Manager
 
             if (client == null)
             {
-                return "Note not found";
+                return "Client not found";
             }
 
             _clients.DeleteOne(client => client.Id == id);
-            return "Note has been deleted";
+            return "Client has been deleted";
         }
     }
 }

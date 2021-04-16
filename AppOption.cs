@@ -8,12 +8,14 @@ namespace my_budget
     public class AppOption : IAppOption
     {
         public IClientSettings ClientSettings { get; set; }
+        public IBudgetSettings BudgetSettings { get; set; }
         private readonly IConfiguration _configuration;
         
         public AppOption(IConfiguration configuration)
         {
             _configuration = configuration;
             ClientSettings = _configuration.GetSection("BudgetDatabaseSettings").Get<ClientsDBSettings>();
+            BudgetSettings = _configuration.GetSection("BudgetDatabaseSettings").Get<BudgetDBSettings>();
         }
     }
 }

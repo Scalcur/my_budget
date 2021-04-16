@@ -10,13 +10,13 @@ namespace my_budget.Controllers
 {
     [ApiController]
     [Route("test/[controller]")]
-    public class BudgetController : BaseController<BudgetController>
+    public class NoteController : BaseController<NoteController>
     {
-        private readonly IClientManager _clientManager;
+        private readonly IBudgetManager _budgetManager;
         
-        public BudgetController(ILogger<BudgetController> logger, IClientManager clientManager) : base(logger)
+        public NoteController(ILogger<NoteController> logger, IBudgetManager budgetManager) : base(logger)
         {
-            _clientManager = clientManager;
+            _budgetManager = budgetManager;
         }
         
         [HttpGet] 
@@ -24,7 +24,7 @@ namespace my_budget.Controllers
         {
             try
             {
-                var response = _clientManager.GetAll().Result;
+                var response = await _budgetManager.GetAll();
                 await SuccessResult(response);
             }
             catch(Exception ex)
@@ -35,11 +35,11 @@ namespace my_budget.Controllers
         }
         
         [HttpPost("create")] 
-        public async Task Create(ClientModel client) 
+        public async Task Create(BudgetModel budget) 
         {
             try
             {
-                var response = _clientManager.Create(client).Result;
+                var response = await _budgetManager.Create(budget);
                 await SuccessResult(response);
             }
             catch(Exception ex)
@@ -54,7 +54,7 @@ namespace my_budget.Controllers
         {
             try
             {
-                var response = _clientManager.Remove(id).Result;
+                var response = await _budgetManager.Remove(id);
                 await SuccessResult(response);
             }
             catch(Exception ex)
